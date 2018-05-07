@@ -1,0 +1,33 @@
+<h2>Hi <%= @user.fname%> <%= @user.lname%>!</h2>
+<a href='<%= logout_path %>'>Logout</a>
+<p>Here are the organizations you may join:</p>
+
+<% @groups.each do |group| %>
+	<h3><a href='<%= viewevents_path group.id %>'><%= group.name %></a></h3>
+	<p>Memebers: <%= group.members %></p>
+	<p><%= group.description %></p>
+	<% if group.user ==  @user  %>
+		<p><a href = '<%= del_path group.id %>'>Delete</a></p>
+	<% end %>
+<% end %>
+
+<% if flash[:error] %>
+		<% flash[:error].each do |e| %>
+			<p><%= e %></p>
+		<% end %>
+<% end %>
+
+<div class = "block">
+	<h3>Create a new organization</h3>
+	<form action = '<%= groups_path %>' method ="post">
+		<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+		<p><label for="name">Org Name</label>
+		<input type = "text" name = "group[name]"></p>
+
+		<p><label for="description">Description</label>
+		<input type="text" name="group[description]"></p>
+
+		<p><input type="submit" value="Create"></p>
+	</form>
+</div>

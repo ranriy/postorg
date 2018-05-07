@@ -1,0 +1,25 @@
+
+<a href='<%= logout_path %>'>Logout</a>
+
+<h3><%= @group.name%></h3>
+<p><%= @group.description %></p>
+
+<a href='<%= groups_path %>'>Dashboard</a>
+
+<% if @group.users.find_by(id: @user.id) %>
+	<a href = '<%= leave_path @group.id %>'>Leave Group</a>
+<% else %>
+	<a href = '<%= join_path @group.id %>'>Join Group</a>
+<% end %>
+
+
+<% if @group.user == @user%>
+	<p>Created by: You </p>
+<% else %>
+	<p>Created by: <%= @group.user.fname %> <%= @group.user.lname %></p>
+<% end %>
+
+<p>Members:</p>
+<% @members.each do |member| %>
+	<p><%= member.fname %> <%= member.lname%></p>
+<% end %>
